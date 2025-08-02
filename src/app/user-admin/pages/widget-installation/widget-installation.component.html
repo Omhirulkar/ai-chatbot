@@ -1,0 +1,214 @@
+<div class="main-content">
+  <div class="widget-installation">
+    <div class="page-header">
+      <h1>Widget Installation</h1>
+      <p>Add the chat widget to your website in just a few simple steps</p>
+    </div>
+    
+    <div class="installation-container">
+      <!-- Left Panel: Instructions & Code -->
+      <div class="code-section">
+        <div class="section-card">
+          <div class="card-header">
+            <h3>Installation Code</h3>
+            <p>Copy this code and add it to your website</p>
+          </div>
+          
+          <div class="code-block">
+            <div class="code-toolbar">
+              <div class="code-options">
+                <label class="option">
+                  <input type="checkbox" [(ngModel)]="includeStyles" />
+                  Include CSS
+                </label>
+                <label class="option">
+                  <input type="checkbox" [(ngModel)]="asyncLoad" />
+                  Async Load
+                </label>
+              </div>
+              <button class="copy-btn" (click)="copyCode()">
+                <i class="bi bi-clipboard"></i> Copy
+              </button>
+            </div>
+            <pre><code>{{ widgetCode }}</code></pre>
+          </div>
+          
+          <div class="installation-steps">
+            <h4>Quick Steps</h4>
+            <div class="steps">
+              <div class="step">
+                <div class="step-icon">1</div>
+                <div class="step-text">Copy the code snippet</div>
+              </div>
+              <div class="step">
+                <div class="step-icon">2</div>
+                <div class="step-text">Paste before closing &lt;/body&gt; tag</div>
+              </div>
+              <div class="step">
+                <div class="step-icon">3</div>
+                <div class="step-text">Customize widget appearance</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="platform-guides">
+          <div class="section-header">
+            <h4>Platform Guides</h4>
+          </div>
+          <div class="platform-grid">
+            <div class="platform-card" (click)="openPlatformGuide('wordpress')">
+              <div class="platform-icon">
+                <i class="bi bi-wordpress"></i>
+              </div>
+              <div class="platform-name">WordPress</div>
+            </div>
+            <div class="platform-card" (click)="openPlatformGuide('shopify')">
+              <div class="platform-icon">
+                <i class="bi bi-bag"></i>
+              </div>
+              <div class="platform-name">Shopify</div>
+            </div>
+            <div class="platform-card" (click)="openPlatformGuide('wix')">
+              <div class="platform-icon">
+                <i class="bi bi-grid-3x3-gap"></i>
+              </div>
+              <div class="platform-name">Wix</div>
+            </div>
+            <div class="platform-card" (click)="openPlatformGuide('squarespace')">
+              <div class="platform-icon">
+                <i class="bi bi-square"></i>
+              </div>
+              <div class="platform-name">Squarespace</div>
+            </div>
+            <div class="platform-card" (click)="openPlatformGuide('html')">
+              <div class="platform-icon">
+                <i class="bi bi-code-slash"></i>
+              </div>
+              <div class="platform-name">HTML Site</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Panel: Preview & Settings -->
+      <div class="preview-section">
+        <div class="section-card">
+          <div class="card-header">
+            <h3>Widget Preview</h3>
+            <p>See how your widget will look</p>
+          </div>
+          
+          <div class="preview-box">
+            <div class="website-mockup">
+              <div class="mock-header">
+                <div class="mock-url-bar">
+                  <div class="mock-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <div class="mock-url">yourwebsite.com</div>
+                </div>
+              </div>
+              <div class="mock-content">
+                <h2>Welcome to Your Website</h2>
+                <p>This is a preview of how the chat widget will appear on your site.</p>
+                
+                <!-- Widget Preview -->
+                <div class="widget-container" [ngClass]="widgetPosition">
+                  <div class="widget-bubble" [ngStyle]="{'background-color': themeColor}" (click)="toggleWidget()">
+                    <i class="bi bi-chat-dots"></i>
+                  </div>
+                  <div class="widget-chat" *ngIf="widgetOpen" [ngClass]="widgetPosition">
+                    <div class="chat-header" [ngStyle]="{'background-color': themeColor}">
+                      <span>Chat Support</span>
+                      <button class="close-btn" (click)="widgetOpen = false">
+                        <i class="bi bi-x-lg"></i>
+                      </button>
+                    </div>
+                    <div class="chat-body">
+                      <div class="message">
+                        <p>Hi! How can I help you today?</p>
+                      </div>
+                    </div>
+                    <div class="chat-input">
+                      <input type="text" placeholder="Type a message...">
+                      <button class="send-btn">
+                        <i class="bi bi-send"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="widget-settings">
+            <h4>Widget Settings</h4>
+            <div class="settings-grid">
+              <div class="setting-item">
+                <label>Position</label>
+                <div class="position-selector">
+                  <button class="pos-btn" [class.active]="widgetPosition === 'left'" (click)="widgetPosition = 'left'">
+                    <i class="bi bi-arrow-left"></i>
+                  </button>
+                  <button class="pos-btn" [class.active]="widgetPosition === 'right'" (click)="widgetPosition = 'right'">
+                    <i class="bi bi-arrow-right"></i>
+                  </button>
+                  <button class="pos-btn" [class.active]="widgetPosition === 'bottom'" (click)="widgetPosition = 'bottom'">
+                    <i class="bi bi-arrow-down"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="setting-item">
+                <label>Theme Color</label>
+                <div class="color-selector">
+                  <input type="color" [(ngModel)]="themeColor" class="color-picker">
+                  <div class="color-presets">
+                    <div class="color-preset" style="background-color: #3498db" (click)="themeColor = '#3498db'"></div>
+                    <div class="color-preset" style="background-color: #2ecc71" (click)="themeColor = '#2ecc71'"></div>
+                    <div class="color-preset" style="background-color: #e74c3c" (click)="themeColor = '#e74c3c'"></div>
+                    <div class="color-preset" style="background-color: #f39c12" (click)="themeColor = '#f39c12'"></div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="setting-item">
+                <label>Trigger</label>
+                <select class="form-select" [(ngModel)]="widgetTrigger">
+                  <option value="click">On Click</option>
+                  <option value="hover">On Hover</option>
+                  <option value="delay">After 10 seconds</option>
+                  <option value="scroll">After scrolling 50%</option>
+                </select>
+              </div>
+              
+              <div class="setting-item">
+                <label>Display</label>
+                <div class="checkbox-group">
+                  <label class="checkbox">
+                    <input type="checkbox" [(ngModel)]="showOnMobile"> Mobile
+                  </label>
+                  <label class="checkbox">
+                    <input type="checkbox" [(ngModel)]="showOnDesktop"> Desktop
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="settings-actions">
+              <button class="btn btn-primary" (click)="saveSettings()">
+                <i class="bi bi-check-lg"></i> Save Settings
+              </button>
+              <button class="btn btn-outline" (click)="resetSettings()">
+                <i class="bi bi-arrow-counterclockwise"></i> Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

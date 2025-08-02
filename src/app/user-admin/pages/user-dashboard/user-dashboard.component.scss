@@ -1,0 +1,270 @@
+.dashboard-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .dashboard-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 5px;
+  }
+
+  .dashboard-subtitle {
+    color: #7f8c8d;
+    font-size: 1rem;
+  }
+
+  .date-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+
+    i {
+      margin-right: 8px;
+      color: #3498db;
+    }
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    height: 100%;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      background: rgba(52, 152, 219, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+
+      i {
+        font-size: 1.8rem;
+        color: #3498db;
+      }
+
+      &.leads {
+        background: rgba(46, 204, 113, 0.1);
+        
+        i {
+          color: #2ecc71;
+        }
+      }
+    }
+
+    .stat-content {
+      flex: 1;
+
+      h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: #2c3e50;
+      }
+
+      p {
+        color: #7f8c8d;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+      }
+
+      .stat-change {
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+
+        i {
+          margin-right: 4px;
+        }
+
+        &.positive {
+          color: #2ecc71;
+        }
+
+        &.negative {
+          color: #e74c3c;
+        }
+      }
+    }
+  }
+
+  .plan-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+    .plan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+
+      h4 {
+        font-size: 1.4rem;
+        color: #2c3e50;
+        margin-bottom: 5px;
+      }
+
+      .plan-description {
+        color: #7f8c8d;
+        margin-bottom: 0;
+      }
+
+      .plan-actions {
+        display: flex;
+        gap: 10px;
+      }
+    }
+
+    .plan-details {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      .plan-detail-item {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        min-width: 150px;
+
+        i {
+          font-size: 1.5rem;
+          color: #3498db;
+          margin-right: 15px;
+        }
+
+        p {
+          color: #7f8c8d;
+          margin-bottom: 0;
+          font-size: 0.85rem;
+        }
+
+        strong {
+          display: block;
+          color: #2c3e50;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .progress-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+
+      h4 {
+        font-size: 1.4rem;
+        color: #2c3e50;
+        margin-bottom: 0;
+      }
+
+      .progress-percentage {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #3498db;
+      }
+    }
+
+    .progress {
+      height: 12px;
+      border-radius: 6px;
+      background-color: #ecf0f1;
+
+      .progress-bar {
+        background-color: #3498db;
+        border-radius: 6px;
+      }
+    }
+
+    .checklist {
+      .checklist-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #ecf0f1;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .form-check {
+          display: flex;
+          align-items: center;
+
+          .form-check-input {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            cursor: pointer;
+          }
+
+          .form-check-label {
+            cursor: pointer;
+            color: #2c3e50;
+            font-weight: 500;
+          }
+        }
+
+        .checklist-status {
+          i {
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+
+    .progress-actions {
+      display: flex;
+      gap: 10px;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .dashboard-container {
+    .stat-card {
+      margin-bottom: 15px;
+    }
+
+    .plan-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .plan-details {
+      flex-direction: column;
+    }
+
+    .progress-actions {
+      flex-direction: column;
+    }
+  }
+}

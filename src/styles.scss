@@ -1,1 +1,67 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles */
+* {
+  font-family: 'Poppins';
+}
+
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* Main content adjustments */
+.main-content {
+  margin-left: 220px; /* Width of expanded sidebar */
+  margin-top: 70px; /* Height of header */
+  padding: 20px;
+  min-height: calc(100vh - 70px);
+  transition: margin-left 0.3s ease;
+  background-color: #f8f9fa;
+}
+
+.main-content.sidebar-collapsed {
+  margin-left: 70px; /* Width of collapsed sidebar */
+}
+
+/* Dashboard container adjustments */
+.dashboard-container {
+  max-width: 1000px; /* Reduced from 1200px */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .dashboard-container {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 992px) {
+  .main-content {
+    margin-left: 70px; /* Collapsed sidebar width */
+  }
+  
+  .dashboard-container {
+    max-width: 95%;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0; /* Full width on mobile */
+    padding: 15px;
+  }
+  
+  .dashboard-container {
+    padding: 10px;
+  }
+}

@@ -1,0 +1,262 @@
+<div class="main-content">
+  <div class="support-page">
+    <div class="page-header">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>Support & Help Center</h1>
+          <p>Find answers to your questions or get in touch with our support team</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary">
+            <i class="bi bi-headset"></i> Contact Support
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="support-container">
+      <!-- Search Section -->
+      <div class="search-section">
+        <div class="search-card">
+          <div class="search-icon">
+            <i class="bi bi-search"></i>
+          </div>
+          <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Search for help articles..."
+            [(ngModel)]="searchQuery"
+          >
+          <button class="search-btn" (click)="searchHelp()">
+            Search
+          </button>
+        </div>
+        
+        <div class="quick-links">
+          <div class="quick-link" (click)="navigateToSection('getting-started')">
+            <i class="bi bi-rocket-takeoff"></i>
+            <span>Getting Started</span>
+          </div>
+          <div class="quick-link" (click)="navigateToSection('billing')">
+            <i class="bi bi-credit-card"></i>
+            <span>Billing & Plans</span>
+          </div>
+          <div class="quick-link" (click)="navigateToSection('technical')">
+            <i class="bi bi-gear"></i>
+            <span>Technical Issues</span>
+          </div>
+          <div class="quick-link" (click)="navigateToSection('account')">
+            <i class="bi bi-person-circle"></i>
+            <span>Account Settings</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Help Categories -->
+      <div class="help-categories">
+        <div class="section-header">
+          <h2>Help Categories</h2>
+          <p>Browse our help articles by category</p>
+        </div>
+        
+        <div class="categories-grid">
+          <div class="category-card" (click)="openCategory('getting-started')">
+            <div class="category-icon">
+              <i class="bi bi-rocket-takeoff"></i>
+            </div>
+            <div class="category-content">
+              <h3>Getting Started</h3>
+              <p>Learn how to set up and use our platform</p>
+              <div class="article-count">12 articles</div>
+            </div>
+          </div>
+          
+          <div class="category-card" (click)="openCategory('account')">
+            <div class="category-icon">
+              <i class="bi bi-person-circle"></i>
+            </div>
+            <div class="category-content">
+              <h3>Account Management</h3>
+              <p>Manage your account and profile settings</p>
+              <div class="article-count">8 articles</div>
+            </div>
+          </div>
+          
+          <div class="category-card" (click)="openCategory('billing')">
+            <div class="category-icon">
+              <i class="bi bi-credit-card"></i>
+            </div>
+            <div class="category-content">
+              <h3>Billing & Payments</h3>
+              <p>Understand your billing and payment options</p>
+              <div class="article-count">10 articles</div>
+            </div>
+          </div>
+          
+          <div class="category-card" (click)="openCategory('technical')">
+            <div class="category-icon">
+              <i class="bi bi-gear"></i>
+            </div>
+            <div class="category-content">
+              <h3>Technical Support</h3>
+              <p>Technical guides and troubleshooting</p>
+              <div class="article-count">15 articles</div>
+            </div>
+          </div>
+          
+          <div class="category-card" (click)="openCategory('api')">
+            <div class="category-icon">
+              <i class="bi bi-code-slash"></i>
+            </div>
+            <div class="category-content">
+              <h3>API Documentation</h3>
+              <p>Integrate with our API and SDKs</p>
+              <div class="article-count">20 articles</div>
+            </div>
+          </div>
+          
+          <div class="category-card" (click)="openCategory('security')">
+            <div class="category-icon">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <div class="category-content">
+              <h3>Security & Privacy</h3>
+              <p>Learn about our security measures</p>
+              <div class="article-count">6 articles</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- FAQ Section -->
+      <div class="faq-section">
+        <div class="section-header">
+          <h2>Frequently Asked Questions</h2>
+          <p>Quick answers to common questions</p>
+        </div>
+        
+        <div class="faq-list">
+          <div class="faq-item" *ngFor="let faq of faqs; let i = index">
+            <div class="faq-question" (click)="toggleFaq(i)">
+              <h4>{{ faq.question }}</h4>
+              <i class="bi" [class.bi-chevron-down]="!faq.open" [class.bi-chevron-up]="faq.open"></i>
+            </div>
+            <div class="faq-answer" *ngIf="faq.open">
+              <p>{{ faq.answer }}</p>
+              <div class="faq-actions" *ngIf="faq.relatedArticles">
+                <span>Related articles:</span>
+                <div class="related-links">
+                  <a *ngFor="let article of faq.relatedArticles" href="#">{{ article }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="view-all-faq">
+          <button class="btn btn-outline-primary">
+            View All FAQs
+          </button>
+        </div>
+      </div>
+      
+      <!-- Contact Support Section -->
+      <div class="contact-section">
+        <div class="section-header">
+          <h2>Still Need Help?</h2>
+          <p>Our support team is here to assist you</p>
+        </div>
+        
+        <div class="contact-options">
+          <div class="contact-card">
+            <div class="contact-icon">
+              <i class="bi bi-chat-dots"></i>
+            </div>
+            <div class="contact-content">
+              <h3>Live Chat</h3>
+              <p>Chat with our support team in real-time</p>
+              <div class="availability">
+                <span class="status-dot online"></span>
+                <span>Available now</span>
+              </div>
+              <button class="btn btn-primary">Start Chat</button>
+            </div>
+          </div>
+          
+          <div class="contact-card">
+            <div class="contact-icon">
+              <i class="bi bi-envelope"></i>
+            </div>
+            <div class="contact-content">
+              <h3>Email Support</h3>
+              <p>Send us an email and we'll respond within 24 hours</p>
+              <div class="email-address">support&#64;example.com</div>
+              <button class="btn btn-outline-primary">Send Email</button>
+            </div>
+          </div>
+          
+          <div class="contact-card">
+            <div class="contact-icon">
+              <i class="bi bi-telephone"></i>
+            </div>
+            <div class="contact-content">
+              <h3>Phone Support</h3>
+              <p>Call us for immediate assistance</p>
+              <div class="phone-number">+1 (555) 123-4567</div>
+              <div class="availability">
+                <span class="status-dot"></span>
+                <span>Mon-Fri, 9AM-5PM EST</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-form">
+          <h3>Send us a Message</h3>
+          <form (ngSubmit)="submitSupportForm()">
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <select id="subject" class="form-control" [(ngModel)]="supportForm.subject" name="subject">
+                <option value="">Select a topic</option>
+                <option value="technical">Technical Issue</option>
+                <option value="billing">Billing Question</option>
+                <option value="account">Account Help</option>
+                <option value="feature">Feature Request</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea 
+                id="message" 
+                class="form-control" 
+                rows="5" 
+                placeholder="Describe your issue or question..."
+                [(ngModel)]="supportForm.message"
+                name="message"
+              ></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="attachment">Attachment (optional)</label>
+              <div class="file-upload">
+                <input type="file" id="attachment" class="file-input" (change)="onFileChange($event)">
+                <label for="attachment" class="file-label">
+                  <i class="bi bi-paperclip"></i>
+                  <span>{{ supportForm.attachment ? supportForm.attachment.name : 'Choose a file...' }}</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-send"></i> Send Message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

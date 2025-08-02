@@ -1,0 +1,172 @@
+<div class="main-content">
+  <div class="customization-page">
+    <div class="page-header">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>Bot Customization</h1>
+          <p>Personalize your chatbot's appearance</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-outline-secondary" (click)="resetCustomization()">
+            <i class="bi bi-arrow-counterclockwise"></i> Reset
+          </button>
+          <button class="btn btn-primary" (click)="saveCustomization()">
+            <i class="bi bi-check-lg"></i> Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="customization-container">
+      <!-- Left Panel: Customization Controls -->
+      <div class="controls-panel">
+        <div class="panel-card">
+          <div class="panel-header">
+            <h3>Appearance Settings</h3>
+            <p>Customize how your chatbot looks</p>
+          </div>
+          
+          <div class="settings-list">
+            <!-- Bot Name Setting -->
+            <div class="setting-item">
+              <div class="setting-label">
+                <div class="label-icon">
+                  <i class="bi bi-person-badge"></i>
+                </div>
+                <div class="label-text">
+                  <h4>Bot Name</h4>
+                  <p>Choose a name for your chatbot</p>
+                </div>
+              </div>
+              <div class="setting-control">
+                <input 
+                  type="text" 
+                  class="form-input" 
+                  placeholder="Enter bot name"
+                  [(ngModel)]="botName"
+                >
+              </div>
+            </div>
+            
+            <!-- Bot Avatar Setting -->
+            <div class="setting-item">
+              <div class="setting-label">
+                <div class="label-icon">
+                  <i class="bi bi-image"></i>
+                </div>
+                <div class="label-text">
+                  <h4>Bot Avatar</h4>
+                  <p>Upload an image to represent your bot</p>
+                </div>
+              </div>
+              <div class="setting-control">
+                <div class="avatar-upload">
+                  <div class="avatar-preview">
+                    <img [src]="botAvatar" alt="Bot Avatar">
+                  </div>
+                  <div class="avatar-actions">
+                    <label class="btn btn-sm btn-primary">
+                      <i class="bi bi-upload"></i> Upload
+                      <input 
+                        type="file" 
+                        (change)="onAvatarChange($event)" 
+                        accept="image/*"
+                        style="display: none;"
+                      >
+                    </label>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="resetAvatar()">
+                      <i class="bi bi-arrow-clockwise"></i> Reset
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Theme Color Setting -->
+            <div class="setting-item">
+              <div class="setting-label">
+                <div class="label-icon">
+                  <i class="bi bi-palette"></i>
+                </div>
+                <div class="label-text">
+                  <h4>Theme Color</h4>
+                  <p>Select the primary color for your chatbot</p>
+                </div>
+              </div>
+              <div class="setting-control">
+                <div class="color-picker">
+                  <div class="color-input-wrapper">
+                    <input 
+                      type="color" 
+                      class="color-input" 
+                      [(ngModel)]="themeColor"
+                    >
+                  </div>
+                  <div class="color-presets">
+                    <div 
+                      *ngFor="let color of presetColors" 
+                      class="color-preset" 
+                      [ngStyle]="{'background-color': color}"
+                      (click)="themeColor = color"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Welcome Message Setting -->
+            <div class="setting-item">
+              <div class="setting-label">
+                <div class="label-icon">
+                  <i class="bi bi-chat-quote"></i>
+                </div>
+                <div class="label-text">
+                  <h4>Welcome Message</h4>
+                  <p>Set the initial message your bot sends</p>
+                </div>
+              </div>
+              <div class="setting-control">
+                <textarea 
+                  class="form-textarea" 
+                  rows="3" 
+                  placeholder="Enter welcome message"
+                  [(ngModel)]="welcomeMessage"
+                ></textarea>
+                <div class="char-counter">{{ welcomeMessage.length }}/200 characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Panel: Live Preview -->
+      <div class="preview-panel">
+        <div class="panel-card">
+          <div class="panel-header">
+            <h3>Live Preview</h3>
+            <p>See your changes in real-time</p>
+          </div>
+          
+          <div class="preview-container">
+            <app-bot-preview
+              [botName]="botName"
+              [botAvatar]="botAvatar"
+              [themeColor]="themeColor"
+              [welcomeMessage]="welcomeMessage">
+            </app-bot-preview>
+          </div>
+          
+          <div class="preview-tips">
+            <h4><i class="bi bi-lightbulb"></i> Customization Tips</h4>
+            <ul>
+              <li>Use a clear, friendly name that represents your brand</li>
+              <li>Choose an avatar that aligns with your brand identity</li>
+              <li>Select a theme color that matches your website's design</li>
+              <li>Keep your welcome message concise and helpful</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

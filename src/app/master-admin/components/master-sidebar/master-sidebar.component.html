@@ -1,0 +1,62 @@
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h4>App Name</h4>
+  </div>
+  
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link active" routerLink="/admin/home" title="Dashboard">
+        <i class="bi bi-speedometer2"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/admin/bot-customization" title="Bot Customization">
+        <i class="bi bi-sliders"></i>
+        <span>Bot Customization</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/admin/faqs" title="FAQs / Knowledge Base">
+        <i class="bi bi-question-circle"></i>
+        <span>FAQs / Knowledge Base</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/admin/widget-installation" title="Widget Installation">
+        <i class="bi bi-code-square"></i>
+        <span>Widget Installation</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/admin/leads" title="Leads / Messages">
+        <i class="bi bi-chat-dots"></i>
+        <span>Leads / Messages</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/admin/billing" title="Billing & Subscription">
+        <i class="bi bi-credit-card"></i>
+        <span>Billing & Subscription</span>
+      </a>
+    </li>
+    <!-- <li class="nav-item">
+      <a class="nav-link" routerLink="/settings" title="Settings">
+        <i class="bi bi-gear"></i>
+        <span>Settings</span>
+      </a>
+    </li> -->
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/admin/support" title="Support / Help">
+        <i class="bi bi-life-preserver"></i>
+        <span>Support / Help</span>
+      </a>
+    </li>
+    <li class="nav-item mt-auto">
+      <a class="nav-link logout" (click)="logout()" title="Logout">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Logout</span>
+      </a>
+    </li>
+  </ul>
+</nav>

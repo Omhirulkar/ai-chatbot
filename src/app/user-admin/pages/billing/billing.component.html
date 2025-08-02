@@ -1,0 +1,316 @@
+<div class="main-content">
+  <div class="billing-page">
+    <div class="page-header">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>Billing & Subscription</h1>
+          <p>Manage your plan, payment methods, and view billing history</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-outline-secondary">
+            <i class="bi bi-download"></i> Download Invoices
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="billing-container">
+      <!-- Current Plan Section -->
+      <div class="current-plan-section">
+        <div class="section-header">
+          <h2>Current Plan</h2>
+        </div>
+        
+        <div class="plan-card">
+          <div class="plan-header">
+            <div class="plan-info">
+              <div class="plan-badge">{{ currentPlan.tier }}</div>
+              <h3>{{ currentPlan.name }}</h3>
+              <p class="plan-price">${{ currentPlan.price }}<span>/month</span></p>
+            </div>
+            <div class="plan-actions">
+              <button class="btn btn-primary" (click)="showUpgradeModal()">
+                Upgrade Plan
+              </button>
+              <button class="btn btn-outline-secondary" (click)="showCancelModal()">
+                Cancel Subscription
+              </button>
+            </div>
+          </div>
+          
+          <div class="plan-details">
+            <div class="detail-item">
+              <div class="detail-icon">
+                <i class="bi bi-calendar-check"></i>
+              </div>
+              <div class="detail-content">
+                <p>Next Billing Date</p>
+                <strong>{{ currentPlan.nextBillingDate | date:'mediumDate' }}</strong>
+              </div>
+            </div>
+            
+            <div class="detail-item">
+              <div class="detail-icon">
+                <i class="bi bi-cpu"></i>
+              </div>
+              <div class="detail-content">
+                <p>API Usage</p>
+                <strong>{{ currentPlan.apiUsage }} / {{ currentPlan.apiLimit }}</strong>
+                <div class="usage-bar">
+                  <div class="usage-progress" [style.width.%]="(currentPlan.apiUsage / currentPlan.apiLimit) * 100"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="detail-item">
+              <div class="detail-icon">
+                <i class="bi bi-people"></i>
+              </div>
+              <div class="detail-content">
+                <p>Team Members</p>
+                <strong>{{ currentPlan.teamMembers }} / {{ currentPlan.teamLimit }}</strong>
+              </div>
+            </div>
+            
+            <div class="detail-item">
+              <div class="detail-icon">
+                <i class="bi bi-credit-card"></i>
+              </div>
+              <div class="detail-content">
+                <p>Payment Method</p>
+                <strong>{{ currentPlan.paymentMethod }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Usage Statistics Section -->
+      <div class="usage-section">
+        <div class="section-header">
+          <h2>Usage Statistics</h2>
+        </div>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="bi bi-chat-dots"></i>
+            </div>
+            <div class="stat-content">
+              <h4>{{ usageStats.chatsThisMonth }}</h4>
+              <p>Chats This Month</p>
+              <div class="stat-change positive">
+                <i class="bi bi-arrow-up"></i> {{ usageStats.chatIncrease }}% from last month
+              </div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="bi bi-person-check"></i>
+            </div>
+            <div class="stat-content">
+              <h4>{{ usageStats.leadsThisMonth }}</h4>
+              <p>Leads Captured</p>
+              <div class="stat-change positive">
+                <i class="bi bi-arrow-up"></i> {{ usageStats.leadIncrease }}% from last month
+              </div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="bi bi-clock-history"></i>
+            </div>
+            <div class="stat-content">
+              <h4>{{ usageStats.avgResponseTime }}</h4>
+              <p>Avg. Response Time</p>
+              <div class="stat-change negative">
+                <i class="bi bi-arrow-down"></i> {{ usageStats.responseDecrease }}% from last month
+              </div>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="bi bi-graph-up"></i>
+            </div>
+            <div class="stat-content">
+              <h4>{{ usageStats.satisfactionRate }}%</h4>
+              <p>Customer Satisfaction</p>
+              <div class="stat-change positive">
+                <i class="bi bi-arrow-up"></i> {{ usageStats.satisfactionIncrease }}% from last month
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Plan Options Section -->
+      <div class="plans-section">
+        <div class="section-header">
+          <h2>Plan Options</h2>
+          <p>Choose the plan that best fits your needs</p>
+        </div>
+        
+        <div class="plans-grid">
+          <div class="plan-option" *ngFor="let plan of planOptions" [class.recommended]="plan.recommended">
+            <div class="plan-header">
+              <div class="plan-badge">{{ plan.tier }}</div>
+              <h3>{{ plan.name }}</h3>
+              <div class="plan-price">
+                <span class="price">${{ plan.price }}</span>
+                <span class="period">/month</span>
+              </div>
+              <p class="plan-description">{{ plan.description }}</p>
+            </div>
+            
+            <div class="plan-features">
+              <div class="feature-item" *ngFor="let feature of plan.features">
+                <i class="bi bi-check-circle"></i>
+                <span>{{ feature }}</span>
+              </div>
+            </div>
+            
+            <div class="plan-footer">
+              <button class="btn" 
+                      [class.btn-primary]="plan.id !== currentPlan.id"
+                      [class.btn-outline-secondary]="plan.id === currentPlan.id"
+                      (click)="selectPlan(plan)">
+                {{ plan.id === currentPlan.id ? 'Current Plan' : (plan.price > currentPlan.price ? 'Upgrade' : 'Downgrade') }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Payment Methods Section -->
+      <div class="payment-section">
+        <div class="section-header">
+          <h2>Payment Methods</h2>
+        </div>
+        
+        <div class="payment-methods">
+          <div class="payment-card">
+            <div class="payment-info">
+              <div class="payment-type">
+                <i class="bi bi-credit-card"></i>
+                <span>Credit Card</span>
+              </div>
+              <div class="payment-details">
+                <div class="card-number">•••• •••• •••• {{ paymentMethods.card.lastFour }}</div>
+                <div class="card-expiry">Expires {{ paymentMethods.card.expiry }}</div>
+              </div>
+            </div>
+            <div class="payment-actions">
+              <button class="btn btn-sm btn-outline-secondary" (click)="editPaymentMethod()">
+                Edit
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="removePaymentMethod()">
+                Remove
+              </button>
+            </div>
+          </div>
+          
+          <button class="add-payment-btn" (click)="addPaymentMethod()">
+            <i class="bi bi-plus-circle"></i>
+            Add Payment Method
+          </button>
+        </div>
+      </div>
+      
+      <!-- Billing History Section -->
+      <div class="history-section">
+        <div class="section-header">
+          <h2>Billing History</h2>
+        </div>
+        
+        <div class="billing-history">
+          <div class="history-table">
+            <div class="table-header">
+              <div class="header-cell">Date</div>
+              <div class="header-cell">Description</div>
+              <div class="header-cell">Amount</div>
+              <div class="header-cell">Status</div>
+              <div class="header-cell">Actions</div>
+            </div>
+            
+            <div class="table-body">
+              <div class="table-row" *ngFor="let invoice of billingHistory">
+                <div class="table-cell">{{ invoice.date | date:'mediumDate' }}</div>
+                <div class="table-cell">{{ invoice.description }}</div>
+                <div class="table-cell">${{ invoice.amount }}</div>
+                <div class="table-cell">
+                  <span class="status-badge" [class.paid]="invoice.status === 'paid'">
+                    {{ invoice.status }}
+                  </span>
+                </div>
+                <div class="table-cell">
+                  <button class="btn btn-sm btn-outline-secondary" (click)="downloadInvoice(invoice.id)">
+                    <i class="bi bi-download"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Upgrade Plan Modal -->
+<div class="modal" *ngIf="showUpgradePlanModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Upgrade Your Plan</h3>
+      <button class="modal-close" (click)="showUpgradePlanModal = false">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Select the plan you'd like to upgrade to:</p>
+      <div class="upgrade-options">
+        <div class="upgrade-option" *ngFor="let plan in upgradePlans" (click)="confirmUpgrade(plan)">
+          <div class="option-header">
+            <h4>{{ plan.name }}</h4>
+            <div class="option-price">${{ plan.price }}/month</div>
+          </div>
+          <div class="option-features">
+            <div class="feature-item" *ngFor="let feature of plan.features">
+              <i class="bi bi-check-circle"></i>
+              <span>{{ feature }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cancel Subscription Modal -->
+<div class="modal" *ngIf="showCancelSubscriptionModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Cancel Subscription</h3>
+      <button class="modal-close" (click)="showCancelSubscriptionModal = false">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to cancel your subscription? Your access will continue until the end of your current billing period.</p>
+      <div class="cancel-reasons">
+        <h4>Reason for cancellation (optional):</h4>
+        <textarea class="form-control" rows="4" placeholder="Tell us why you're cancelling..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline-secondary" (click)="showCancelSubscriptionModal = false">
+          Keep Subscription
+        </button>
+        <button class="btn btn-danger" (click)="confirmCancellation()">
+          Cancel Subscription
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
