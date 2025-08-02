@@ -1,1 +1,1296 @@
-<p>contact works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI ChatBot - Custom ChatGPT for Your Website</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: #fff;
+        }
+
+        /* Navigation - Botsonic Style */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #6366f1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #6366f1;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Hero Section - Botsonic Style */
+        .hero {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+            border-radius: 50%;
+            transform: rotate(-15deg);
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-content .highlight {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #6366f1;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #6366f1;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            border-color: #6366f1;
+            background: #f8fafc;
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .chat-interface {
+            background: white;
+            border-radius: 24px;
+            padding: 0;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.08);
+            max-width: 400px;
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .chat-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .chat-info p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .chat-messages {
+            padding: 1.5rem;
+            height: 350px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 1.5rem;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .message.bot {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .message.user {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .message-bubble {
+            max-width: 85%;
+            padding: 0.75rem 1rem;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .message.bot .message-bubble {
+            background: #f3f4f6;
+            color: #374151;
+            border-bottom-left-radius: 6px;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border-bottom-right-radius: 6px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #9ca3af;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        /* How it Works - Botsonic Style */
+        .how-it-works {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border-color: #6366f1;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+            color: #6366f1;
+        }
+
+        .step-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .step-card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #6b7280;
+            line-height: 1.7;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 500px;
+            margin: 3rem auto;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .price-amount {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin: 1.5rem 0;
+        }
+
+        .price-period {
+            font-size: 1.1rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .price-features {
+            list-style: none;
+            margin: 2.5rem 0;
+            text-align: left;
+        }
+
+        .price-features li {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+            color: #374151;
+        }
+
+        .price-features li::before {
+            content: "✓";
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #10b981;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* WhatsApp Integration */
+        .whatsapp-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white;
+        }
+
+        .whatsapp-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .whatsapp-content h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .whatsapp-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .whatsapp-features li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            font-size: 1.1rem;
+        }
+
+        .whatsapp-features li::before {
+            content: "✓";
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .phone-mockup {
+            background: #333;
+            border-radius: 30px;
+            padding: 1rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .phone-screen {
+            background: #075e54;
+            border-radius: 20px;
+            padding: 1.5rem;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatsapp-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 1.5rem;
+        }
+
+        .wa-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #25d366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .lead-notification {
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .final-cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .cta-content h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-container,
+            .whatsapp-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .steps-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                ChatBot AI
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#integration">Integration</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#demo" class="nav-cta">Build Your AI Agent</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Create a Custom <span class="highlight">AI Chatbot</span> for Your Website in Minutes</h1>
+                <p>Transform your business with AI-powered automation that converts visitors into WhatsApp leads 24/7. No coding required.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Businesses</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">10k+</span>
+                        <span class="stat-label">Leads Generated</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Support</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="#pricing" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        Build Your AI Agent for Free
+                    </a>
+                    <a href="#demo" class="btn btn-secondary">
+                        <i class="fas fa-play"></i>
+                        Watch Demo
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="chat-interface">
+                    <div class="chat-header">
+                        <div class="chat-avatar">🤖</div>
+                        <div class="chat-info">
+                            <h3>AI Sales Assistant</h3>
+                            <p>Online • Ready to help</p>
+                        </div>
+                    </div>
+                    <div class="chat-messages">
+                        <div class="message bot">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-bubble">
+                                Hi! I'm your AI assistant. I can help you with product information and connect you with our sales team. What are you looking for today?
+                            </div>
+                        </div>
+                        <div class="message user">
+                            <div class="message-bubble">
+                                I need a website for my restaurant business
+                            </div>
+                        </div>
+                        <div class="message bot">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-bubble">
+                                Perfect! I'd love to help you with that. Can I get your WhatsApp number to send you our restaurant website portfolio and pricing details?
+                            </div>
+                        </div>
+                        <div class="message user">
+                            <div class="message-bubble">
+                                Sure! +91 98765 43210
+                            </div>
+                        </div>
+                        <div class="message bot">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-bubble">
+                                Great! I've sent the details to your WhatsApp. Our team will contact you within 2 hours with a custom proposal. 🎉
+                            </div>
+                        </div>
+                    </div>
+                    <div class="typing-indicator">
+                        <div class="message-avatar">🤖</div>
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                        <span style="color: #6b7280; font-size: 0.85rem;">AI is typing...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">How it Works</h2>
+                <p class="section-subtitle">Get your AI chatbot up and running in minutes with our simple 4-step process</p>
+            </div>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">📁</div>
+                    <h3>Upload Your Data</h3>
+                    <p>Upload your files (PDFs, Word documents), add your website, or sync from Google Drive. Our AI will understand your data instantly.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🎨</div>
+                    <h3>Customize Your Bot</h3>
+                    <p>Personalize your AI agent with your branding—add logos, choose colors, and set the conversational tone.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">🔗</div>
+                    <h3>Integrate to Website</h3>
+                    <p>Add a custom chat widget to your website with simple copy-paste code. No technical knowledge required.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">📊</div>
+                    <h3>Connect & Monitor</h3>
+                    <p>Connect to WhatsApp and other platforms. Monitor performance with real-time analytics and insights.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful Features for Lead Generation</h2>
+                <p class="section-subtitle">Everything you need to convert website visitors into paying customers</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>24/7 Customer Support</h3>
+                    <p>Never miss a customer query. Our AI chatbot works around the clock to engage visitors and capture leads even when you're sleeping.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>WhatsApp Integration</h3>
+                    <p>Automatically send qualified leads to your WhatsApp with complete conversation history and contact details.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Smart Lead Qualification</h3>
+                    <p>AI intelligently qualifies leads based on your criteria and only sends high-quality prospects to your sales team.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Setup</h3>
+                    <p>No coding required! Get your chatbot live on your website in under 5 minutes with our simple installation process.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Advanced Analytics</h3>
+                    <p>Track conversation metrics, lead conversion rates, and customer satisfaction with comprehensive analytics dashboard.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Multi-Platform Integration</h3>
+                    <p>Connect with WhatsApp, Facebook Messenger, Slack, Zapier, and more for a unified customer experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <p class="section-subtitle">Everything you need to start converting leads for just ₹299/month</p>
+            </div>
+            
+            <div class="pricing-card">
+                <div class="popular-badge">Most Popular</div>
+                <h3>Professional Plan</h3>
+                <div class="price-amount">₹299<span class="price-period">/month</span></div>
+                
+                <ul class="price-features">
+                    <li>Unlimited website visitors</li>
+                    <li>WhatsApp lead integration</li>
+                    <li>24/7 AI-powered responses</li>
+                    <li>Custom branding & design</li>
+                    <li>Multi-language support</li>
+                    <li>Advanced analytics dashboard</li>
+                    <li>Lead qualification scoring</li>
+                    <li>Email & SMS notifications</li>
+                    <li>API access for integrations</li>
+                    <li>Priority customer support</li>
+                    <li>No setup fees</li>
+                    <li>Free training & onboarding</li>
+                </ul>
+                
+                <a href="#demo" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                    Start 7-Day Free Trial
+                </a>
+                <p style="margin-top: 1rem; color: #6b7280; font-size: 0.9rem;">No credit card required • Cancel anytime</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Integration Section -->
+    <section class="whatsapp-section" id="integration">
+        <div class="whatsapp-container">
+            <div class="whatsapp-content">
+                <h2>Seamless WhatsApp Lead Generation</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.95;">When a visitor shows interest, our AI automatically captures their details and sends them directly to your WhatsApp business account instantly.</p>
+                
+                <ul class="whatsapp-features">
+                    <li>Complete conversation history</li>
+                    <li>Contact details (name, phone, email)</li>
+                    <li>Lead qualification score</li>
+                    <li>Interested products/services</li>
+                    <li>Best time to contact</li>
+                    <li>Urgency level indicator</li>
+                    <li>Custom fields for your business</li>
+                </ul>
+                
+                <a href="#demo" class="btn btn-primary" style="background: white; color: #25d366; margin-top: 2rem;">
+                    <i class="fab fa-whatsapp"></i>
+                    See WhatsApp Demo
+                </a>
+            </div>
+            
+            <div class="whatsapp-visual">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="whatsapp-header">
+                            <div class="wa-avatar">🤖</div>
+                            <div>
+                                <div style="font-weight: 600;">ChatBot AI</div>
+                                <div style="font-size: 0.8rem; opacity: 0.8;">New Lead Alert</div>
+                            </div>
+                        </div>
+                        
+                        <div class="lead-notification">
+                            <div style="font-weight: 600; color: #25d366; margin-bottom: 0.5rem;">🎯 High Priority Lead</div>
+                            <div><strong>Name:</strong> Sarah Johnson</div>
+                            <div><strong>Phone:</strong> +91 98765 43210</div>
+                            <div><strong>Email:</strong> sarah&#64;email.com</div>
+                            <div><strong>Interest:</strong> Restaurant Website</div>
+                            <div><strong>Budget:</strong> ₹50,000 - ₹1,00,000</div>
+                        </div>
+                        
+                        <div class="lead-notification">
+                            <div style="font-weight: 600; margin-bottom: 0.5rem;">💬 Conversation Summary</div>
+                            <div style="font-size: 0.85rem; font-style: italic;">"I need a professional website for my new restaurant. Looking for online ordering and booking features."</div>
+                        </div>
+                        
+                        <div class="lead-notification">
+                            <div style="color: #25d366; font-weight: 600;">✅ Ready to Contact</div>
+                            <div style="font-size: 0.85rem;">Best time: 10 AM - 6 PM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security & Trust Section -->
+    <section style="padding: 100px 0; background: white;">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Security First, No Training on Your Data</h2>
+                <p class="section-subtitle">Enterprise-grade security measures to protect your business and customer data</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="width: 80px; height: 80px; border-radius: 16px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 2rem;">🔒</div>
+                    <h3 style="color: #1f2937; margin-bottom: 0.5rem;">Data Encryption</h3>
+                    <p style="color: #6b7280;">End-to-end encryption for all data</p>
+                </div>
+                
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="width: 80px; height: 80px; border-radius: 16px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 2rem;">🏛️</div>
+                    <h3 style="color: #1f2937; margin-bottom: 0.5rem;">SOC 2 Compliant</h3>
+                    <p style="color: #6b7280;">Industry standard security protocols</p>
+                </div>
+                
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="width: 80px; height: 80px; border-radius: 16px; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 2rem;">🛡️</div>
+                    <h3 style="color: #1f2937; margin-bottom: 0.5rem;">Zero Data Training</h3>
+                    <p style="color: #6b7280;">We never train AI models on your data</p>
+                </div>
+                
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="width: 80px; height: 80px; border-radius: 16px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; color: white; font-size: 2rem;">📋</div>
+                    <h3 style="color: #1f2937; margin-bottom: 0.5rem;">GDPR Compliant</h3>
+                    <p style="color: #6b7280;">Full compliance with data protection laws</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section style="padding: 100px 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Customers Love Us</h2>
+                <p class="section-subtitle">Join hundreds of businesses using our AI chatbot for automated customer experiences</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <div style="background: white; border-radius: 20px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+                    <div style="display: flex; gap: 4px; margin-bottom: 1.5rem;">
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                    </div>
+                    <p style="color: #374151; font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; font-style: italic;">"Since implementing this chatbot, our lead generation increased by 340%! The WhatsApp integration is a game-changer for our digital marketing agency."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">RK</div>
+                        <div>
+                            <div style="font-weight: 600; color: #1f2937;">Rajesh Kumar</div>
+                            <div style="color: #6b7280; font-size: 0.9rem;">Digital Marketing Agency Owner</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 20px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+                    <div style="display: flex; gap: 4px; margin-bottom: 1.5rem;">
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                    </div>
+                    <p style="color: #374151; font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; font-style: italic;">"Best investment we made for our e-commerce store. The AI handles customer queries perfectly and sends qualified leads directly to our sales team on WhatsApp."</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">PS</div>
+                        <div>
+                            <div style="font-weight: 600; color: #1f2937;">Priya Sharma</div>
+                            <div style="color: #6b7280; font-size: 0.9rem;">E-commerce Store Owner</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 20px; padding: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+                    <div style="display: flex; gap: 4px; margin-bottom: 1.5rem;">
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                        <span style="color: #fbbf24; font-size: 1.2rem;">⭐</span>
+                    </div>
+                    <p style="color: #374151; font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; font-style: italic;">"Setup was incredibly easy and the results were immediate. We're getting 15+ qualified leads daily now through WhatsApp. Highly recommended!"</p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">AP</div>
+                        <div>
+                            <div style="font-weight: 600; color: #1f2937;">Amit Patel</div>
+                            <div style="color: #6b7280; font-size: 0.9rem;">Real Estate Developer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" id="demo">
+        <div class="cta-content">
+            <h2>Ready to Transform Your Website Into a Lead Generation Machine?</h2>
+            <p>Join 500+ businesses already using our AI chatbot to convert website visitors into WhatsApp leads. Start your free trial today and see results within 24 hours!</p>
+            
+            <div class="cta-buttons">
+                <a href="https://wa.me/+919876543210?text=Hi! I want to start my free trial of the AI ChatBot" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.2rem 2.5rem;">
+                    <i class="fas fa-rocket"></i>
+                    Start Free Trial Now
+                </a>
+            </div>
+            
+            <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; opacity: 0.8; font-size: 0.9rem;">
+                <span>⚡ Setup in 5 minutes</span>
+                <span>💰 No setup fees</span>
+                <span>🔄 Cancel anytime</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: #1f2937; color: white; padding: 60px 0 30px;">
+        <div class="section-container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+                <div>
+                    <div class="logo" style="color: white; margin-bottom: 1rem; font-size: 1.5rem;">
+                        <i class="fas fa-robot"></i>
+                        ChatBot AI
+                    </div>
+                    <p style="color: #9ca3af; margin-bottom: 1.5rem;">Transform your website visitors into WhatsApp leads with our AI-powered chatbot solution.</p>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#" style="width: 40px; height: 40px; border-radius: 50%; background: #374151; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" style="width: 40px; height: 40px; border-radius: 50%; background: #374151; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" style="width: 40px; height: 40px; border-radius: 50%; background: #374151; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none;">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="margin-bottom: 1rem; color: white;">Product</h4>
+                    <ul style="list-style: none; color: #9ca3af;">
+                        <li style="margin-bottom: 0.5rem;"><a href="#features" style="color: #9ca3af; text-decoration: none;">Features</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#pricing" style="color: #9ca3af; text-decoration: none;">Pricing</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#integration" style="color: #9ca3af; text-decoration: none;">Integrations</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #9ca3af; text-decoration: none;">API Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 style="margin-bottom: 1rem; color: white;">Support</h4>
+                    <ul style="list-style: none; color: #9ca3af;">
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #9ca3af; text-decoration: none;">Help Center</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #9ca3af; text-decoration: none;">Contact Us</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #9ca3af; text-decoration: none;">Live Chat</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #9ca3af; text-decoration: none;">Status Page</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 style="margin-bottom: 1rem; color: white;">Contact</h4>
+                    <ul style="list-style: none; color: #9ca3af;">
+                        <li style="margin-bottom: 0.5rem;">📧 support&#64;chatbotai.com</li>
+                        <li style="margin-bottom: 0.5rem;">📞 +91 98765 43210</li>
+                        <li style="margin-bottom: 0.5rem;">📍 Mumbai, Maharashtra, India</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid #374151; padding-top: 2rem; text-align: center; color: #9ca3af;">
+                <p>&copy; 2025 ChatBot AI. All rights reserved. | <a href="#" style="color: #9ca3af;">Privacy Policy</a> | <a href="#" style="color: #9ca3af;">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/+919876543210?text=Hi! I'm interested in your AI ChatBot service for my website" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const animateElements = document.querySelectorAll('.step-card, .feature-card, .pricing-card');
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Chat animation
+        let messageIndex = 0;
+        const messages = document.querySelectorAll('.message');
+        
+        function showNextMessage() {
+            if (messageIndex < messages.length) {
+                messages[messageIndex].style.display = 'flex';
+                messages[messageIndex].style.animation = 'slideInUp 0.6s ease-out';
+                messageIndex++;
+                setTimeout(showNextMessage, 2000);
+            }
+        }
+
+        // Start chat animation after page load
+        document.addEventListener('DOMContentLoaded', () => {
+            messages.forEach(msg => msg.style.display = 'none');
+            setTimeout(showNextMessage, 1000);
+        });
+    </script>
+</body>
+</html>
+
